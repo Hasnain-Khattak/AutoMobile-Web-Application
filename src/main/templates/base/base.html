@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This website is for buying ans selling old and new mobile in Pakistan. where you can contact with the seller and buy mobile from him.">
+    <meta name="author" content="Muhammad Hasnain, Data Scientist">
+
+    {% block title %}<title>AutoMob. List Your Mobiles!</title>{% endblock %}
+{% block css %}
+    <!-- Css Links -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- custom-css -->
+    <link rel="stylesheet" href="{% static 'custom-css/custom-css.css' %}"> 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+{% endblock %}
+
+<!-- Jquery CDN -->
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+        {{ message }} 
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% block header %}
+    <header class="p-3 bg-dark text-white w-100 nav-masthead">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <img src="{% static 'images/logo.png' %}" alt="" width="40" height="40" aria-label="Bootstrap" class="bi me-2">
+                </a>
+                {% if request.user.is_authenticated %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li>
+                        <a href="{% url 'profile' %}" class="nav-link px-2">Profile</a>
+                    </li>
+                </ul>
+                <div class="test-end">
+                    <a href="{% url 'logout' %}" class="btn btn-danger" type="button" style="display: flex; align-items: center; justify-content: center; background: #e90808; font-weight: 600;">Logout</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>    
+    </header>    
+
+    {% endblock %}
+    {% block body %}
+        
+    {% endblock %}
+
+</body>
+
+{% block footer %}
+
+<footer class="footer text-muted bg-dark py-5">
+    <div class="container">
+        <p class="float-end mb-1 white-para">Powered by <a href="https://www.djangoproject.com/" class="">Django</a></p>
+        </p>
+        <p class="mb-1 white-para">AutoMob - Best Place To Buy & Sell Mobiles</p>
+        <p class="mb-0 white-para">© Copyright {% now 'Y' %} <a href="" class="">AutoMob</a></p>
+    </div>
+</footer>    
+{% endblock %}
+
+</html>

@@ -1,0 +1,179 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block css %}
+    <!-- Css Links -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- custom-css -->
+    <link rel="stylesheet" href="{% static 'custom-css/custom-css.css' %}"> 
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <style>
+        .color-text {
+            color: black !important;
+            font-weight: 500 !important;
+            font-size: 15px !important;
+        }
+
+        .img-w-h {
+            width: 400px !important;
+            height: 350px !important;
+        }
+        
+        .marg-top {
+            margin-top: 30px !important;
+        }
+        .seller-info {
+            color: rgb(70 66 65) !important;
+            font-weight: bold !important;
+        }
+
+        .list {
+            color: black !important;
+            font-weight: 500 !important;
+        }
+        .p {
+            color: black !important;
+            font-weight: 400 !important;
+        }
+        
+        
+        @keyframes border-animation {
+            0% {
+                border-top-width: 0;
+                border-right-width: 0;
+                border-bottom-width: 0;
+                border-left-width: 0;
+            }
+            25% {
+                border-top-width: 2px;
+                border-right-width: 0;
+                border-bottom-width: 0;
+                border-left-width: 0;
+            }
+            50% {
+                border-top-width: 2px;
+                border-right-width: 2px;
+                border-bottom-width: 0;
+                border-left-width: 0;
+            }
+            75% {
+                border-top-width: 2px;
+                border-right-width: 2px;
+                border-bottom-width: 2px;
+                border-left-width: 0;
+            }
+            100% {
+                border-top-width: 2px;
+                border-right-width: 2px;
+                border-bottom-width: 2px;
+                border-left-width: 2px;
+            }
+        }
+        
+        .animated-border {
+            display: inline-block;
+            max-width: 298px; /* Maximum width for the element */
+            position: relative;
+            border: 2px solid gray; /* Set initial border color */
+            animation: border-animation 4s infinite;
+        }
+    </style>
+
+{% endblock %}
+
+{% block title %}
+<title>AutoMob .
+    {{listing.model}} Listing
+</title>
+{% endblock %}
+
+{% block body %}
+<main>
+    <section class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="{{ listing.image.url }}" class="d-block mx-lg-auto img-fluid img-w-h"
+                    loading="lazy">
+                    <p class="lead marg-top animated-border p" style="font-size: 20px;">Price: Rs {{ listing.price }}</p>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="display-5 fw-bold lh-1 mb-3">
+                    {{ listing.model }}
+                </h3>
+                <p class="lead marg-top seller-info animated-border p">Seller Name: {{listing.seller.user.username|upper}}</p>
+            </div>
+            <p class="p" style="font-size: 30px;"> Updated At: {{listing.updated_at}}</p>
+        </div>
+    </section>
+    <div class="bg-light">
+        <div class="container py-5 px-4">
+            <h2 class="mb-3 border-bottom" style="color: black">Mobile Information</h2>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col-lg-8">
+                    <div class="table-responsive">
+                        <table class="table text-center">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="text-start">Brand</th>
+                                    <td class="color-text"> {{listing.brand|capfirst }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">Condition</th>
+                                    <td class="color-text"> {{listing.condition }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">Color</th>
+                                    <td class="color-text"> {{listing.color }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">Warranty</th>
+                                    <td class="color-text"> {{listing.warranty }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">box</th>
+                                    <td class="color-text"> {{listing.box }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">charger</th>
+                                    <td class="color-text"> {{listing.charger|capfirst }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0">Location</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4 list">
+                                <li>{{ listing.location.city }}, {{ listing.location.state }},
+                                    {{listing.location.zip_code }} </li>
+                            </ul>
+                            <button
+                                class="w-100 btn btn-lg btn-outline-primary my-3">{{listing.seller.phone_number}}</button>
+                            <button id="sendEmail" class="w-100 btn btn-lg btn-outline-primary">Send Email</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container px-4 py-5">
+            <div class="row g-4 py-5">
+                <div class="col d-flex align-items-start">
+                    <div>
+                        <h2 class="mb-3 border-bottom" style="color: black">Description:</h2>
+                        <p class="p"> {{ listing.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}

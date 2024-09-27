@@ -1,0 +1,25 @@
+.white-para {
+    color: rgb(255 255 255 / 75%) !important;
+}
+
+.btn-custom-design {
+    text-transform: uppercase;
+}
+
+.btn-danger-custom {
+    width: 226px;
+    height: 77px;
+    margin-top: 10px;
+}
+.black-color-h1 {
+    color: black;
+    font-weight: bold;
+}
+
+.foam-card {
+    color: black;
+    font-size: large;
+    font-weight: 700;
+    flex: 0 0 auto;
+    width: 50%;
+}

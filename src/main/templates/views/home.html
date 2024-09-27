@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>
+AutoMob . Home!
+</title>
+{% endblock %}
+
+{% block extra_css %}
+<!-- Add any extra CSS here -->
+{% endblock %}
+
+{% block body %}
+<main>
+    <section class="py-5 container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="">AutoMob</h1>
+                <p class="lead" style="font-weight: 500;">The best place to buy or sell mobile phones, and we’ve
+                    made it that much easier for you.</p>
+                <a href="{% url 'list' %}" class="btn btn-primary my-2" style="border-radius: 5px;">Add Your Mobile</a>
+            </div>
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <form id="filterForm" method="get" class="">
+                    {% csrf_token %}
+                    {{ listing_filter.form|crispy }}
+                    <button class="btn-lg" type="submit" style="background: red; color: white;  border: none; font-size: 20px; width: 106px;height: 43px;">Search</button>
+                </form>
+            </div>
+        </div>   
+    </section>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="listingContainer">
+                {% for listing in listing_filter.qs %}
+                <div class="col">
+                    {% include 'components/listing-card.html' %}
+                </div>
+                {% empty %}
+                <div class="col">
+                    <h2 class="" style="text-transform: none; letter-spacing: 0;">OOps! No mobiles available.</h2>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Add any extra JavaScript here -->
+<script>
+    // Function to handle form submission via AJAX
+    function submitForm() {
+        var formData = new FormData(document.getElementById('filterForm')); // Get form data
+
+        // Send AJAX request to filter listings
+        fetch(window.location.pathname + '?' + new URLSearchParams(formData))
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('listingContainer').innerHTML = data; // Update listings container with filtered results
+            });
+    }
+
+    // Listen for changes in form fields and automatically submit the form
+    document.getElementById('filterForm').addEventListener('change', submitForm);
+
+    // Submit the form initially
+    submitForm();
+</script>
+{% endblock %}
